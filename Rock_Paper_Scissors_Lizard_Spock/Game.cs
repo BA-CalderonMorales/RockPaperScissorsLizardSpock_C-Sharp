@@ -34,33 +34,54 @@ namespace Rock_Paper_Scissors_Lizard_Spock
         {
             Console.WriteLine("Welcome to Rock, Paper, Lizard, Spock!");
             Console.WriteLine("Are you going to go up against buddy, or would you like to go against the computer?");
-            Console.WriteLine("Enter the 'no bots' for human v human, or 'bots' for human v artificial intelligence:");
+            Console.WriteLine("Enter 'no bots' for human v human, or 'bots' for human v artificial intelligence:");
             string answer = Console.ReadLine();
-            BotsNoBotsChoice(answer);
+            string check = BotsNoBotsChoice(answer);
+            Console.WriteLine($"{check}");
+            do
+            {
+                if (check == "invalid")
+                {
+                    Console.WriteLine("That was an invalid choice.");
+                    Console.WriteLine("Enter 'no bots' for human v human, or 'bots' for human v artificial intelligence:");
+                    answer = Console.ReadLine();
+                    check = BotsNoBotsChoice(answer);
+                }
+                else
+                {
+                    // Console.WriteLine("Good Job");
+                }
+            } while (check == "invalid");
+            // Console.WriteLine($"{answer}"); no bots or bots will only pass. 
+            // Console.WriteLine($"{check}"); valid is passed 
+            switch (answer.ToLower()) 
+            {
+                case "bots":
+                    // Console.WriteLine($"Currently in the {answer} gameplay");
+                    Console.WriteLine("This is the human v. ai gameplay.");
+                    break;
+
+                case "no bots":
+                    // Console.WriteLine($"Currently in the {answer} gameplay");
+                    Console.WriteLine("This is the human v. human gameplay.");
+                    break;
+            }
         }
 
         /// <summary>
-        /// A simple helper method to allow a user to choose whether they 
+        /// A method to allow a user to choose whether they 
         /// want to go up against a friend or the computer.
         /// </summary>
         /// 
         /// <param name="answer">The answer coming in from RunGame()</param>
-        private void BotsNoBotsChoice(string answer)
+        private string BotsNoBotsChoice(string answer)
         {
-            switch (answer.ToLower())
+            if (answer.ToLower() == "bots" || answer.ToLower() == "no bots")
             {
-                case "no bots":
-                    Console.WriteLine("This is the human v human gameplay.");
-                    break;
-                case "bots":
-                    Console.WriteLine("This is the human v bot gameplay");
-                    break;
-                default:
-                    Console.WriteLine("That's not an option. Try again!");
-                    Console.WriteLine("Enter the 'no bots' for human v human, or 'bot' for human v artificial intelligence:");
-                    string newAnswer = Console.ReadLine();
-                    BotsNoBotsChoice(newAnswer);
-                    break;
+                return "valid";
+            }
+            else {
+                return "invalid";
             }
         }
     }

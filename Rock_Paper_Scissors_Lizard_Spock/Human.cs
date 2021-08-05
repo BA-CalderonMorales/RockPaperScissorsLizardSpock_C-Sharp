@@ -30,5 +30,10 @@ namespace Rock_Paper_Scissors_Lizard_Spock
         {
             this.isItMyTurn = !isItMyTurn;
         }
+
+        public override string ToString()
+        {
+            return this.nickname.ToString();
+        }
     }
 }

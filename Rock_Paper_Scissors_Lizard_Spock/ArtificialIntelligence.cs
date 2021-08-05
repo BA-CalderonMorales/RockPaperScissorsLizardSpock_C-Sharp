@@ -14,7 +14,7 @@ namespace Rock_Paper_Scissors_Lizard_Spock
         int lives;
         bool isItMyTurn;
 
-        public ArtificialIntelligence(string name)
+        public ArtificialIntelligence()
         {
             this.nickname = SetBotName();
             this.lives = 3;
@@ -51,6 +51,11 @@ namespace Rock_Paper_Scissors_Lizard_Spock
         public override void MyTurn()
         {
             this.isItMyTurn = !isItMyTurn;
+        }
+
+        public override string ToString()
+        {
+            return this.nickname.ToString();
         }
     }
 }
