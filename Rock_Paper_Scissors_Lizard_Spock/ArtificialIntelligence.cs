@@ -13,12 +13,16 @@ namespace Rock_Paper_Scissors_Lizard_Spock
         string nickname;
         int lives;
         bool isItMyTurn;
+        List<string> gestures;
+        string chosenGesture;
 
         public ArtificialIntelligence()
         {
             this.nickname = SetBotName();
             this.lives = 3;
             this.isItMyTurn = false;
+            this.gestures = new List<string>();
+            this.chosenGesture = "";
         }
 
         public string SetBotName()
@@ -56,6 +60,31 @@ namespace Rock_Paper_Scissors_Lizard_Spock
         public override string ToString()
         {
             return this.nickname.ToString();
+        }
+
+        public override void ChooseGesture()
+        {
+            Random random = new Random();
+            int rand = random.Next(0, 5);
+            string[] all_gestures = new string[5];
+            all_gestures[0] = "rock";
+            all_gestures[1] = "paper";
+            all_gestures[2] = "scissors";
+            all_gestures[3] = "lizard";
+            all_gestures[4] = "spock";
+            for (int index = 0; index < all_gestures.Length; index++)
+            {
+                if (all_gestures[index] == all_gestures[rand])
+                {
+                    this.chosenGesture = all_gestures[index];
+                    this.gestures.Add(all_gestures[index]);
+                }
+            }
+        }
+
+        public override void RemoveGesture()
+        {
+            this.gestures.Remove(this.chosenGesture);
         }
     }
 }

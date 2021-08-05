@@ -20,5 +20,9 @@ namespace Rock_Paper_Scissors_Lizard_Spock
 
         public abstract void MyTurn();
 
+        public abstract void ChooseGesture();
+
+        public abstract void RemoveGesture();
+
     }
 }
