@@ -22,16 +22,29 @@ namespace Rock_Paper_Scissors_Lizard_Spock
             this.nickname = name;
             this.lives = 3;
             this.isItMyTurn = false;
-            this.chosenGesture = "";
-            this.gestureToRemove = "";
+            this.chosenGesture = ""; // rock, paper, scissors, lizard, spock
+            this.gestureToRemove = ""; // rock, paper, scissors, lizard, spock
         }
 
-        public void SetTheChosenGesture(string aGesture)
+        public int GetRemainingLives()
         {
-            this.chosenGesture = aGesture;
+            return this.lives;
         }
 
-        public string GetTheChosenGesture()
+        public string GetTheNickname()
+        {
+            return this.nickname;
+        }
+        public override void SetTheNickName(string name)
+        {
+            this.nickname = name;
+        }
+        public override void SetTheChosenGesture(string gesture)
+        {
+            this.chosenGesture = gesture;
+        }
+
+        public override string GetTheChosenGesture()
         {
             return this.chosenGesture;
         }
@@ -69,6 +82,21 @@ namespace Rock_Paper_Scissors_Lizard_Spock
         public override string ToString()
         {
             return this.nickname.ToString();
+        }
+
+        public void ShowGestureOptions()
+        {
+            string[] all_gestures = new string[5];
+            all_gestures[0] = "1. Rock";
+            all_gestures[1] = "2. Paper";
+            all_gestures[2] = "3. Scissors";
+            all_gestures[3] = "4. Lizard";
+            all_gestures[4] = "5. Spock";
+            Console.WriteLine("Here are your gesture options:");
+            for (int index = 0; index < all_gestures.Length; index++)
+            {
+                Console.WriteLine($"{all_gestures[index]}");
+            }
         }
     }
 }

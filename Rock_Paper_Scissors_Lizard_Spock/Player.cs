@@ -17,12 +17,12 @@ namespace Rock_Paper_Scissors_Lizard_Spock
 
         // Member methods
         public abstract void LoseLife();
-
         public abstract void MyTurn();
-
         public abstract void ChooseGesture();
-
+        public abstract void SetTheNickName(string name);
+        public abstract void SetTheChosenGesture(string gesture);
         public abstract void RemoveGesture();
+        public abstract string GetTheChosenGesture();
 
     }
 }

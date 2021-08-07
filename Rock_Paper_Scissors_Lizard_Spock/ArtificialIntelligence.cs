@@ -14,7 +14,7 @@ namespace Rock_Paper_Scissors_Lizard_Spock
         int lives;
         bool isItMyTurn;
         List<string> gestures;
-        string chosenGesture;
+        string chosenGesture; // rock, paper, scissors, lizard, spock
 
         public ArtificialIntelligence()
         {
@@ -62,6 +62,11 @@ namespace Rock_Paper_Scissors_Lizard_Spock
             return this.nickname.ToString();
         }
 
+        public override void SetTheChosenGesture(string gesture)
+        {
+            this.chosenGesture = gesture;
+        }
+
         public override void ChooseGesture()
         {
             Random random = new Random();
@@ -86,5 +91,6 @@ namespace Rock_Paper_Scissors_Lizard_Spock
         {
             this.gestures.Remove(this.chosenGesture);
         }
+
     }
 }
