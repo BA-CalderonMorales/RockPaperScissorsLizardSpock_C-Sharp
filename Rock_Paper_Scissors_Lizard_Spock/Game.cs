@@ -20,7 +20,6 @@ namespace Rock_Paper_Scissors_Lizard_Spock
         ArtificialIntelligence compPlayer;
 
         /// <summary>
-        /// The Game object is istantiated with no member variables.
         /// All other classes are imported via the namespace. No need
         /// to import all the classes being used to run this game.
         /// </summary>
@@ -52,13 +51,8 @@ namespace Rock_Paper_Scissors_Lizard_Spock
                     answer = Console.ReadLine();
                     check = BotsNoBotsChoice(answer);
                 }
-                else
-                {
-                    // Console.WriteLine("Good Job");
-                }
             } while (check == "invalid");
-            // Console.WriteLine($"{answer}"); no bots or bots will only pass. 
-            // Console.WriteLine($"{check}"); valid is passed 
+            
             switch (answer.ToLower())
             {
                 case "bots":
@@ -84,15 +78,14 @@ namespace Rock_Paper_Scissors_Lizard_Spock
 
                         Console.WriteLine($"{this.firstPlayer.GetTheNickname()}, choose a gesture:");
                         string responseOne = RetrieveAnswer(choices, this.firstPlayer);
-                        this.firstPlayer.SetTheChosenGesture(responseOne);
                         Console.WriteLine($"{this.secondPlayer.GetTheNickname()}, choose a gesture:");
                         string responseTwo = RetrieveAnswer(choices, this.secondPlayer);
-                        this.secondPlayer.SetTheChosenGesture(responseTwo);
 
-                        AssignGestures(this.firstPlayer, this.secondPlayer);
+                        AssignGestures(responseOne, responseTwo);
 
                         string playerOneGesture = this.firstPlayer.GetTheChosenGesture();
                         string playerTwoGesture = this.secondPlayer.GetTheChosenGesture();
+
                         RetrieveRoundResult(playerOneGesture, playerTwoGesture);
 
                     } while (this.firstPlayer.GetRemainingLives() > 0 && this.secondPlayer.GetRemainingLives() > 0);
@@ -237,12 +230,13 @@ namespace Rock_Paper_Scissors_Lizard_Spock
             
         }
 
-        private void AssignGestures(Human playerOne, Player playerTwo)
+        private void AssignGestures(string playerOneGesture, string playerTwoGesture)
         {
             // 1 = rock, 2 = paper, 3 = scissors, 4 = lizard, 5 = spock
-            string playerOneGesture = playerOne.GetTheChosenGesture();
-            string playerTwoGesture = playerTwo.GetTheChosenGesture();
-            switch (playerOneGesture)
+            string handOne = playerOneGesture;
+            string handTwo = playerTwoGesture;
+
+            switch (handOne)
             {
                 case "1":
                     this.firstPlayer.SetTheChosenGesture("rock");
@@ -260,7 +254,7 @@ namespace Rock_Paper_Scissors_Lizard_Spock
                     this.firstPlayer.SetTheChosenGesture("spock");
                     break;
             }
-            switch (playerTwoGesture)
+            switch (handTwo)
             {
                 case "1":
                     this.secondPlayer.SetTheChosenGesture("rock");
@@ -294,7 +288,7 @@ namespace Rock_Paper_Scissors_Lizard_Spock
                     response = choices[index];
                 }
             }
-            return response;
+            return response; // returns 1, 2, 3, 4, or 5...
         }
 
         /// <summary>
