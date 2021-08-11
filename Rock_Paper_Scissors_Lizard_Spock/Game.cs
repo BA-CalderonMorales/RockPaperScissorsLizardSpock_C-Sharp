@@ -88,7 +88,20 @@ namespace Rock_Paper_Scissors_Lizard_Spock
                         string playerTwoGesture = this.secondPlayer.GetTheChosenGesture();
 
                         RetrieveRoundResult(playerOneGesture, playerTwoGesture);
-
+                        Console.WriteLine($"{this.firstPlayer.GetRemainingLives()}");
+                        Console.WriteLine($"{this.secondPlayer.GetRemainingLives()}");
+                        if (this.firstPlayer.GetRemainingLives() == 1 && this.secondPlayer.GetRemainingLives() >= 2)
+                        {
+                            this.firstPlayer.LoseLife();
+                            Console.WriteLine($"Looks like {this.secondPlayer.GetTheNickname()} won!");
+                            Console.WriteLine("Run the program to play again. Hit enter to end this game session.");
+                        }
+                        else if (this.secondPlayer.GetRemainingLives() == 1 && this.firstPlayer.GetRemainingLives() >= 2)
+                        {
+                            this.secondPlayer.LoseLife();
+                            Console.WriteLine($"Looks like {this.firstPlayer.GetTheNickname()} won!");
+                            Console.WriteLine("Run the program to play again. Hit enter to end this game session.");
+                        }
                     }
                     break;
             }
