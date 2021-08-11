@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Rock_Paper_Scissors_Lizard_Spock
 {
@@ -25,7 +22,9 @@ namespace Rock_Paper_Scissors_Lizard_Spock
         /// </summary>
         public Game()
         {
-            // Empty
+            this.firstPlayer = new Human("human");
+            this.secondPlayer = new Human("human");
+            this.compPlayer = new ArtificialIntelligence();
         }
 
         /// <summary>
@@ -41,7 +40,7 @@ namespace Rock_Paper_Scissors_Lizard_Spock
             Console.WriteLine("Enter 'no bots' for human v human, or 'bots' for human v artificial intelligence:");
             string answer = Console.ReadLine();
             string check = BotsNoBotsChoice(answer);
-            
+
             do
             {
                 if (check == "invalid")
@@ -52,7 +51,7 @@ namespace Rock_Paper_Scissors_Lizard_Spock
                     check = BotsNoBotsChoice(answer);
                 }
             } while (check == "invalid");
-            
+
             switch (answer.ToLower())
             {
                 case "bots":
@@ -71,15 +70,17 @@ namespace Rock_Paper_Scissors_Lizard_Spock
                     this.secondPlayer.SetTheNickName(nicknameTwo);
 
                     // Start of Game Logic
-                    do
+                    while (this.firstPlayer.GetRemainingLives() >= 2 && this.secondPlayer.GetRemainingLives() > 0
+                        || this.firstPlayer.GetRemainingLives() > 0 && this.secondPlayer.GetRemainingLives() >= 2)
                     {
-                        
+
                         string[] choices = GetAllChoices();
 
                         Console.WriteLine($"{this.firstPlayer.GetTheNickname()}, choose a gesture:");
-                        string responseOne = RetrieveAnswer(choices, this.firstPlayer);
+                        string responseOne = RetrieveAnswer(choices);
+                        
                         Console.WriteLine($"{this.secondPlayer.GetTheNickname()}, choose a gesture:");
-                        string responseTwo = RetrieveAnswer(choices, this.secondPlayer);
+                        string responseTwo = RetrieveAnswer(choices);
 
                         AssignGestures(responseOne, responseTwo);
 
@@ -88,11 +89,62 @@ namespace Rock_Paper_Scissors_Lizard_Spock
 
                         RetrieveRoundResult(playerOneGesture, playerTwoGesture);
 
-                    } while (this.firstPlayer.GetRemainingLives() > 0 && this.secondPlayer.GetRemainingLives() > 0);
-                        break;
+                    }
+                    break;
             }
         }
-
+        private string GetHiddenConsoleInput()
+        {
+            string response = null;
+            Console.WriteLine("Please enter a choice and then press <Enter> to submit. If you choose something wonky, you will default to rock.");
+            while (true)
+            {
+                var key = System.Console.ReadKey(true);
+                if (key.Key == ConsoleKey.Enter)
+                    break;
+                response += key.KeyChar;
+            }
+            // Console.WriteLine($"{response}"); Simply returns the string version of 1, 2, 3, 4, or 5.
+            return response;
+        }
+        
+        private string RetrieveAnswer(string[] choices)
+        {
+            string response = ""; // Holds what is returned
+            this.firstPlayer.ShowGestureOptions(); // Options displayed to the players
+            string chosenNumber = GetHiddenConsoleInput(); // Hides the input from the players
+            for (int index = 0; index < choices.Length; index++)
+            {
+                if (chosenNumber == "1")
+                {
+                    response = choices[0]; // rock
+                }
+                else if (chosenNumber == "2")
+                {
+                    response = choices[1]; // paper
+                }
+                else if (chosenNumber == "3")
+                {
+                    response = choices[2]; // scissors
+                }
+                else if (chosenNumber == "4")
+                {
+                    response = choices[3]; // lizard
+                }
+                else if (chosenNumber == "5")
+                {
+                    response = choices[4]; // spock
+                }
+                else
+                {
+                    // defaults to 0, if you want to pick anything other than 1-5
+                    // which is rock.
+                    response = choices[0]; 
+                }
+            }
+            return response; // returns 1, 2, 3, 4, or 5...
+        }
+        
         private void RetrieveRoundResult(string handOne, string handTwo)
         {
             string tie = handOne + " " + handTwo;
@@ -112,7 +164,7 @@ namespace Rock_Paper_Scissors_Lizard_Spock
                 NotATie(handOne, handTwo);
             }
         }
-
+        
         private void NotATie(string handOne, string handTwo)
         {
             switch (handOne)
@@ -138,9 +190,9 @@ namespace Rock_Paper_Scissors_Lizard_Spock
                             break;
                     }
                     break;
-                
+
                 case "paper":
-                    switch (handTwo) 
+                    switch (handTwo)
                     {
                         case "lizard":
                             // paper is eaten by lizard
@@ -160,7 +212,7 @@ namespace Rock_Paper_Scissors_Lizard_Spock
                             break;
                     }
                     break;
-                
+
                 case "scissors":
                     switch (handTwo)
                     {
@@ -182,7 +234,7 @@ namespace Rock_Paper_Scissors_Lizard_Spock
                             break;
                     }
                     break;
-                
+
                 case "lizard":
                     switch (handTwo)
                     {
@@ -227,7 +279,7 @@ namespace Rock_Paper_Scissors_Lizard_Spock
                     }
                     break;
             }
-            
+
         }
 
         private void AssignGestures(string playerOneGesture, string playerTwoGesture)
@@ -272,23 +324,7 @@ namespace Rock_Paper_Scissors_Lizard_Spock
                     this.secondPlayer.SetTheChosenGesture("spock");
                     break;
             }
-        }
-
-        private string RetrieveAnswer(string[] choices, Human player)
-        {
-            player.ShowGestureOptions();
-            string response = "";
-            Console.WriteLine("Press <Enter> when you've finished selecting your gesture:");
-            StringBuilder input = new StringBuilder();
-            string chosenGesture = GetHiddenConsoleInput(input);
-            for (int index = 0; index < choices.Length; index++)
-            {
-                if (choices[index] == chosenGesture && chosenGesture == "1")
-                {
-                    response = choices[index];
-                }
-            }
-            return response; // returns 1, 2, 3, 4, or 5...
+            // Console.WriteLine($"{this.firstPlayer.GetTheChosenGesture()} {this.secondPlayer.GetTheChosenGesture()}");
         }
 
         /// <summary>
@@ -303,7 +339,8 @@ namespace Rock_Paper_Scissors_Lizard_Spock
             {
                 return "valid";
             }
-            else {
+            else
+            {
                 return "invalid";
             }
         }
@@ -317,27 +354,6 @@ namespace Rock_Paper_Scissors_Lizard_Spock
             choices[3] = "4"; // lizard
             choices[4] = "5"; // spock
             return choices;
-        }
-
-        private string GetHiddenConsoleInput(StringBuilder input)
-        {
-            while (true)
-            {
-                var key = Console.ReadKey(true);
-                if (key.Key == ConsoleKey.Enter)
-                {
-                    break;
-                }
-                if (key.Key == ConsoleKey.Backspace && input.Length > 0)
-                {
-                    input.Remove(input.Length - 1, 1);
-                }
-                else if (key.Key != ConsoleKey.Backspace)
-                {
-                    input.Append(key.KeyChar);
-                }
-            }
-            return input.ToString();
         }
     }
 }

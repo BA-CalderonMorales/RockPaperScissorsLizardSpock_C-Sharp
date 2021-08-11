@@ -92,5 +92,14 @@ namespace Rock_Paper_Scissors_Lizard_Spock
             this.gestures.Remove(this.chosenGesture);
         }
 
+        public override void SetTheNickName(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string GetTheChosenGesture()
+        {
+            return this.chosenGesture;
+        }
     }
 }
