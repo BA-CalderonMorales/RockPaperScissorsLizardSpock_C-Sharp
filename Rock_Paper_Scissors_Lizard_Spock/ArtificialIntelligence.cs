@@ -62,11 +62,6 @@ namespace Rock_Paper_Scissors_Lizard_Spock
             return this.nickname.ToString();
         }
 
-        public override void SetTheChosenGesture(string gesture)
-        {
-            this.chosenGesture = gesture;
-        }
-
         public override void ChooseGesture()
         {
             Random random = new Random();
@@ -90,6 +85,16 @@ namespace Rock_Paper_Scissors_Lizard_Spock
         public override void RemoveGesture()
         {
             this.gestures.Remove(this.chosenGesture);
+        }
+
+        public override int GetRemainingLives()
+        {
+            return this.lives;
+        }
+
+        public override string GetTheNickname()
+        {
+            return this.nickname;
         }
 
         public override void SetTheNickName(string name)

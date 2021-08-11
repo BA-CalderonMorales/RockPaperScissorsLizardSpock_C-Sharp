@@ -55,19 +55,60 @@ namespace Rock_Paper_Scissors_Lizard_Spock
             switch (answer.ToLower())
             {
                 case "bots":
-                    Console.WriteLine("This is the human v. ai gameplay.");
+                    // Gather nicknames for each player.
+                    Console.WriteLine("Choose a nickname:");
+                    string nickname = Console.ReadLine();
+
+                    this.firstPlayer.SetTheNickName(nickname);
+                    this.compPlayer.SetBotName();
+
+                    Console.WriteLine($"{this.firstPlayer.GetTheNickname()}, you're up against: {this.compPlayer.GetTheNickname()}");
+
+                    // Start of Game Logic
+                    while (this.firstPlayer.GetRemainingLives() >= 2 && this.compPlayer.GetRemainingLives() > 0
+                        || this.firstPlayer.GetRemainingLives() > 0 && this.compPlayer.GetRemainingLives() >= 2)
+                    {
+
+                        string[] choices = GetAllChoices();
+
+                        Console.WriteLine($"{this.firstPlayer.GetTheNickname()}, choose a gesture:");
+                        string responseOne = RetrieveAnswer(choices);
+
+                        this.compPlayer.ChooseGesture();
+
+                        AssignGestureSinglePlayer(responseOne);
+
+                        string playerOneGesture = this.firstPlayer.GetTheChosenGesture();
+                        string compGesture = this.compPlayer.GetTheChosenGesture();
+
+                        RetrieveRoundResult(playerOneGesture, compGesture);
+                        Console.WriteLine($"{this.firstPlayer.GetRemainingLives()}");
+                        Console.WriteLine($"{this.compPlayer.GetRemainingLives()}");
+                        if (this.firstPlayer.GetRemainingLives() == 1 && this.compPlayer.GetRemainingLives() >= 2)
+                        {
+                            this.firstPlayer.LoseLife();
+                            Console.WriteLine($"Looks like {this.compPlayer.GetTheNickname()} won!");
+                            Console.WriteLine("Run the program to play again. Hit enter to end this game session.");
+                        }
+                        else if (this.compPlayer.GetRemainingLives() == 1 && this.firstPlayer.GetRemainingLives() >= 2)
+                        {
+                            this.compPlayer.LoseLife();
+                            Console.WriteLine($"Looks like {this.firstPlayer.GetTheNickname()} won!");
+                            Console.WriteLine("Run the program to play again. Hit enter to end this game session.");
+                        }
+                    }
                     break;
 
                 case "no bots":
                     // Gather nicknames for each player.
                     Console.WriteLine("This is the human v. human gameplay.");
                     Console.WriteLine("Player one, choose a nickname:");
-                    string nicknameOne = Console.ReadLine();
+                    string humanOne = Console.ReadLine();
                     Console.WriteLine("Player two, choose a nickname:");
-                    string nicknameTwo = Console.ReadLine();
+                    string humanTwo = Console.ReadLine();
 
-                    this.firstPlayer.SetTheNickName(nicknameOne);
-                    this.secondPlayer.SetTheNickName(nicknameTwo);
+                    this.firstPlayer.SetTheNickName(humanOne);
+                    this.secondPlayer.SetTheNickName(humanTwo);
 
                     // Start of Game Logic
                     while (this.firstPlayer.GetRemainingLives() >= 2 && this.secondPlayer.GetRemainingLives() > 0
@@ -82,7 +123,7 @@ namespace Rock_Paper_Scissors_Lizard_Spock
                         Console.WriteLine($"{this.secondPlayer.GetTheNickname()}, choose a gesture:");
                         string responseTwo = RetrieveAnswer(choices);
 
-                        AssignGestures(responseOne, responseTwo);
+                        AssignGesturesMultiplayer(responseOne, responseTwo);
 
                         string playerOneGesture = this.firstPlayer.GetTheChosenGesture();
                         string playerTwoGesture = this.secondPlayer.GetTheChosenGesture();
@@ -295,7 +336,32 @@ namespace Rock_Paper_Scissors_Lizard_Spock
 
         }
 
-        private void AssignGestures(string playerOneGesture, string playerTwoGesture)
+        private void AssignGestureSinglePlayer(string playerGesture)
+        {
+            // 1 = rock, 2 = paper, 3 = scissors, 4 = lizard, 5 = spock
+            string handOne = playerGesture;
+
+            switch (handOne)
+            {
+                case "1":
+                    this.firstPlayer.SetTheChosenGesture("rock");
+                    break;
+                case "2":
+                    this.firstPlayer.SetTheChosenGesture("paper");
+                    break;
+                case "3":
+                    this.firstPlayer.SetTheChosenGesture("scissors");
+                    break;
+                case "4":
+                    this.firstPlayer.SetTheChosenGesture("lizard");
+                    break;
+                case "5":
+                    this.firstPlayer.SetTheChosenGesture("spock");
+                    break;
+            }
+        }
+
+        private void AssignGesturesMultiplayer(string playerOneGesture, string playerTwoGesture)
         {
             // 1 = rock, 2 = paper, 3 = scissors, 4 = lizard, 5 = spock
             string handOne = playerOneGesture;

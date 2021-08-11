@@ -26,12 +26,12 @@ namespace Rock_Paper_Scissors_Lizard_Spock
             this.gestureToRemove = ""; // rock, paper, scissors, lizard, spock
         }
 
-        public int GetRemainingLives()
+        public override int GetRemainingLives()
         {
             return this.lives;
         }
 
-        public string GetTheNickname()
+        public override string GetTheNickname()
         {
             return this.nickname;
         }
@@ -39,7 +39,7 @@ namespace Rock_Paper_Scissors_Lizard_Spock
         {
             this.nickname = name;
         }
-        public override void SetTheChosenGesture(string gesture)
+        public void SetTheChosenGesture(string gesture)
         {
             this.chosenGesture = gesture;
         }

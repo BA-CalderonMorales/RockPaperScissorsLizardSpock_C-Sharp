@@ -19,8 +19,9 @@ namespace Rock_Paper_Scissors_Lizard_Spock
         public abstract void LoseLife();
         public abstract void MyTurn();
         public abstract void ChooseGesture();
+        public abstract string GetTheNickname();
+        public abstract int GetRemainingLives();
         public abstract void SetTheNickName(string name);
-        public abstract void SetTheChosenGesture(string gesture);
         public abstract void RemoveGesture();
         public abstract string GetTheChosenGesture();
 
