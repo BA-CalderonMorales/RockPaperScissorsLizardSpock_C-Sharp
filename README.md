@@ -82,7 +82,8 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-<img href="https://user-images.githubusercontent.com/62074841/133490662-1c50786a-094e-4a9f-9eb9-d02b777256f2.png" />
+![image](https://user-images.githubusercontent.com/62074841/133553261-6c903f99-f6c5-405c-ba9a-e50e3380786a.png)
+
 <p>
  In this project, I took on making the rock, paper, scissors, lizard, spock game from Big Bang Theory. It's using 
  Visual Studio and the console within the IDE to prompt commands to a user playing the game to input specific gestures 
